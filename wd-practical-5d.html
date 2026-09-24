@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Umesh Deshmukh-IT25115</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: Georgia, serif;
+        }
+
+        .food-card {
+            transition: all 0.4s ease;
+        }
+
+        .food-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .order-btn {
+            transition: all 0.3s ease;
+        }
+
+        .order-btn:hover {
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+
+<body class="bg-orange-50 text-gray-800">
+
+
+    <!-- Header -->
+    <header class="bg-green-900 text-white text-center py-16 px-5">
+
+        <!-- Student Name / ID -->
+        <h class="text-white text-xl font-bold">
+            Umesh Deshmukh-IT25115
+        </h>
+
+        <p class="text-orange-300 uppercase tracking-[5px] text-sm font-bold mt-5">
+            Welcome to
+        </p>
+
+        <h1 class="text-5xl md:text-6xl font-bold mt-3">
+            Royal Rasoi
+        </h1>
+
+        <div class="w-24 h-1 bg-orange-400 mx-auto mt-5 rounded-full"></div>
+
+        <p class="text-orange-100 max-w-2xl mx-auto mt-6 text-lg">
+            Experience the rich taste of India with traditional spices,
+            authentic recipes and freshly prepared delicious meals.
+        </p>
+
+    </header>
+
+
+
+    <!-- Menu Section -->
+    <section class="max-w-6xl mx-auto px-6 py-14">
+
+
+        <!-- Section Heading -->
+        <div class="text-center mb-12">
+
+            <h2 class="text-3xl md:text-4xl font-bold text-green-900">
+                Our Indian Specials
+            </h2>
+
+            <p class="text-gray-600 mt-3">
+                A delicious journey through the flavours of India
+            </p>
+
+        </div>
+
+
+
+        <!-- Food Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+
+            <!-- Card 1 -->
+            <div class="food-card bg-white rounded-3xl overflow-hidden
+                        shadow-md border border-orange-100">
+
+                <img
+                    src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800"
+                    alt="Samosa"
+                    class="w-full h-56 object-cover">
+
+                <div class="p-6">
+
+                    <div class="flex justify-between items-center">
+
+                        <h3 class="text-2xl font-bold text-green-900">
+                            Punjabi Samosa
+                        </h3>
+
+                        <span class="text-orange-600 font-bold text-lg">
+                            ₹80
+                        </span>
+
+                    </div>
+
+                    <p class="text-gray-600 mt-3 leading-6">
+                        Crispy golden samosas stuffed with spicy potatoes,
+                        peas and traditional Indian masalas.
+                    </p>
+
+                    <button
+                        class="order-btn mt-6 w-full bg-orange-500 text-white
+                               font-bold py-3 rounded-full hover:bg-green-800">
+                        Order Now
+                    </button>
+
+                </div>
+            </div>
+
+
+
+            <!-- Card 2 -->
+            <div class="food-card bg-white rounded-3xl overflow-hidden
+                        shadow-md border border-orange-100">
+
+                <img
+                    src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800"
+                    alt="Paneer Butter Masala"
+                    class="w-full h-56 object-cover">
+
+                <div class="p-6">
+
+                    <div class="flex justify-between items-center">
+
+                        <h3 class="text-2xl font-bold text-green-900">
+                            Paneer Butter Masala
+                        </h3>
+
+                        <span class="text-orange-600 font-bold text-lg">
+                            ₹280
+                        </span>
+
+                    </div>
+
+                    <p class="text-gray-600 mt-3 leading-6">
+                        Soft paneer cooked in a creamy tomato gravy
+                        with butter and aromatic Indian spices.
+                    </p>
+
+                    <button
+                        class="order-btn mt-6 w-full bg-orange-500 text-white
+                               font-bold py-3 rounded-full hover:bg-green-800">
+                        Order Now
+                    </button>
+
+                </div>
+            </div>
+
+
+
+          <!-- Card 3 -->
+<div class="food-card bg-white rounded-3xl overflow-hidden
+            shadow-md border border-orange-100">
+
+    <img
+        src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800"
+        alt="Veg Kolhapuri"
+        class="w-full h-56 object-cover">
+
+    <div class="p-6">
+
+        <div class="flex justify-between items-center">
+
+            <h3 class="text-2xl font-bold text-green-900">
+                Veg Kolhapuri
+            </h3>
+
+            <span class="text-orange-600 font-bold text-lg">
+                ₹240
+            </span>
+
+        </div>
+
+        <p class="text-gray-600 mt-3 leading-6">
+            A spicy and flavorful mix of fresh vegetables
+            cooked with traditional Kolhapuri masalas.
+        </p>
+
+        <button
+            class="order-btn mt-6 w-full bg-orange-500 text-white
+                   font-bold py-3 rounded-full hover:bg-green-800">
+            Order Now
+        </button>
+
+    </div>
+</div>
+
+
+
+            <!-- Card 4 -->
+            <div class="food-card bg-white rounded-3xl overflow-hidden
+                        shadow-md border border-orange-100">
+
+                <img
+                    src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?w=800"
+                    alt="Butter Naan"
+                    class="w-full h-56 object-cover">
+
+                <div class="p-6">
+
+                    <div class="flex justify-between items-center">
+
+                        <h3 class="text-2xl font-bold text-green-900">
+                            Butter Naan
+                        </h3>
+
+                        <span class="text-orange-600 font-bold text-lg">
+                            ₹60
+                        </span>
+
+                    </div>
+
+                    <p class="text-gray-600 mt-3 leading-6">
+                        Soft and fluffy naan freshly baked in a traditional
+                        tandoor and topped with butter.
+                    </p>
+
+                    <button
+                        class="order-btn mt-6 w-full bg-orange-500 text-white
+                               font-bold py-3 rounded-full hover:bg-green-800">
+                        Order Now
+                    </button>
+
+                </div>
+            </div>
+
+
+
+            <!-- Card 5 -->
+            <div class="food-card bg-white rounded-3xl overflow-hidden
+                        shadow-md border border-orange-100">
+
+                <img
+                    src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800"
+                    alt="Chole Bhature"
+                    class="w-full h-56 object-cover">
+
+                <div class="p-6">
+
+                    <div class="flex justify-between items-center">
+
+                        <h3 class="text-2xl font-bold text-green-900">
+                            Chole Bhature
+                        </h3>
+
+                        <span class="text-orange-600 font-bold text-lg">
+                            ₹180
+                        </span>
+
+                    </div>
+
+                    <p class="text-gray-600 mt-3 leading-6">
+                        Spicy chickpea curry served with hot,
+                        fluffy and crispy bhature.
+                    </p>
+
+                    <button
+                        class="order-btn mt-6 w-full bg-orange-500 text-white
+                               font-bold py-3 rounded-full hover:bg-green-800">
+                        Order Now
+                    </button>
+
+                </div>
+            </div>
+
+
+
+            <!-- Card 6 -->
+            <div class="food-card bg-white rounded-3xl overflow-hidden
+                        shadow-md border border-orange-100">
+
+                <img
+                    src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=800"
+                    alt="Gulab Jamun"
+                    class="w-full h-56 object-cover">
+
+                <div class="p-6">
+
+                    <div class="flex justify-between items-center">
+
+                        <h3 class="text-2xl font-bold text-green-900">
+                            Gulab Jamun
+                        </h3>
+
+                        <span class="text-orange-600 font-bold text-lg">
+                            ₹120
+                        </span>
+
+                    </div>
+
+                    <p class="text-gray-600 mt-3 leading-6">
+                        Soft milk-solid dumplings soaked in warm
+                        sugar syrup and flavoured with cardamom.
+                    </p>
+
+                    <button
+                        class="order-btn mt-6 w-full bg-orange-500 text-white
+                               font-bold py-3 rounded-full hover:bg-green-800">
+                        Order Now
+                    </button>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-green-900 text-center text-orange-100 py-6">
+
+        <p>
+            © 2026 Royal Rasoi | Authentic Indian Flavours
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>
