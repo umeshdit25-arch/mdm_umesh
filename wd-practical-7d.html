@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College FAQ - IT25115</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0f2fe, #eef2ff);
+            font-family: Arial, sans-serif;
+        }
+
+        .question {
+            transition: 0.2s;
+        }
+
+        .question:hover {
+            background-color: #f8fafc;
+        }
+
+        .answer {
+            display: none;
+        }
+
+        .answer.active {
+            display: block;
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+        }
+
+        .arrow.active {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+
+<body class="min-h-screen px-6 py-4">
+
+    <!-- Student Proof Header -->
+    <div class="max-w-4xl mx-auto mb-4">
+
+        <div class="bg-slate-900 text-white rounded-lg px-5 py-3
+                    flex justify-between items-center shadow-md">
+
+            <div>
+                <p class="text-xs text-slate-300">
+                    Student Name / Roll Number
+                </p>
+
+                <h2 class="text-lg font-bold">
+                    IT25115 - Umesh Deshmukh
+                </h2>
+            </div>
+
+            <div class="text-2xl">
+                🎓
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main FAQ Container -->
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-6">
+
+        <!-- Heading -->
+        <div class="text-center mb-5">
+
+            <div class="text-3xl mb-1">
+                📚
+            </div>
+
+            <h1 class="text-2xl font-bold text-slate-800">
+                College FAQ Portal
+            </h1>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Quick answers to common student questions
+            </p>
+
+        </div>
+
+
+        <!-- FAQ Grid -->
+        <div class="grid grid-cols-2 gap-3">
+
+
+            <!-- FAQ 1 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        🕘 What are the college working hours?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    The regular college working hours are from
+                    9:00 AM to 4:00 PM.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 2 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        🏢 Where can I contact the administration office?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    Students can visit the administration office
+                    during official working hours.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 3 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        💳 How can I pay my college fees?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    College fees can be paid through the online
+                    student portal or accounts department.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 4 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        🪪 What should I do if my ID card is lost?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    Report the lost card to the college office and
+                    apply for a replacement ID card.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 5 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        📖 What resources are available in the library?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    Students can access textbooks, reference books,
+                    journals and other study materials.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 6 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        📝 How can I submit a leave request?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    Leave requests can be submitted through the
+                    student portal or to the concerned faculty.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 7 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        📅 Where can I check the exam timetable?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    The examination timetable is published on the
+                    college website and notice board.
+                </div>
+
+            </div>
+
+
+            <!-- FAQ 8 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+
+                <div class="question flex justify-between items-center
+                            px-4 py-3 cursor-pointer">
+
+                    <span class="font-semibold text-sm text-slate-700">
+                        💻 Where can I find study materials?
+                    </span>
+
+                    <span class="arrow text-indigo-600">
+                        ▼
+                    </span>
+
+                </div>
+
+                <div class="answer px-4 pb-3 text-sm text-gray-600">
+                    Study materials are available through the
+                    student portal and college library.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="text-center mt-5 pt-3 border-t text-xs text-gray-400">
+            College Student Support Portal • 2026
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        let questions = document.querySelectorAll(".question");
+
+        questions.forEach(function(question) {
+
+            question.addEventListener("click", function() {
+
+                let answer = question.nextElementSibling;
+                let arrow = question.querySelector(".arrow");
+
+                answer.classList.toggle("active");
+                arrow.classList.toggle("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
