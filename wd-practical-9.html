@@ -1,0 +1,462 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Umesh deshmukh | IT25115 | Task Manager</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-8">
+
+    <section class="w-full max-w-2xl">
+
+        <!-- Header -->
+        <div class="mb-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wider">
+                        Daily Planner
+                    </p>
+
+                    <h1 class="text-3xl font-extrabold text-slate-800 mt-1">
+                        Task Manager
+                    </h1>
+
+                    <p class="text-slate-500 mt-1">
+                        Organize your academic and personal work
+                    </p>
+                </div>
+
+                <div class="hidden sm:flex h-14 w-14 rounded-2xl bg-indigo-600 text-white items-center justify-center shadow-lg">
+                    ✓
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Main Card -->
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+
+            <!-- Add Task Area -->
+            <div class="p-5 sm:p-6 bg-gradient-to-r from-indigo-50 to-purple-50">
+
+                <label for="taskBox" class="block text-sm font-semibold text-slate-700 mb-2">
+                    Add a new task
+                </label>
+
+                <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2">
+
+                    <input
+                        type="text"
+                        id="taskBox"
+                        maxlength="80"
+                        placeholder="What do you need to do?"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white
+                        outline-none focus:ring-2 focus:ring-indigo-400
+                        focus:border-indigo-400 transition">
+
+                    <select
+                        id="typeBox"
+                        class="px-3 py-3 rounded-xl border border-slate-300 bg-white
+                        text-slate-700 outline-none focus:ring-2 focus:ring-indigo-400">
+
+                        <option value="Study">Study</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Project">Project</option>
+
+                    </select>
+
+                    <button
+                        id="addTaskButton"
+                        class="px-5 py-3 rounded-xl bg-indigo-600 text-white
+                        font-semibold hover:bg-indigo-700 active:scale-95
+                        transition shadow-md">
+
+                        + Add Task
+
+                    </button>
+
+                </div>
+
+                <p id="warning" class="text-red-500 text-sm mt-2 min-h-5"></p>
+
+            </div>
+
+
+            <!-- Progress Section -->
+            <div class="px-5 sm:px-6 py-4 border-b border-slate-200">
+
+                <div class="flex items-center justify-between mb-2">
+
+                    <span class="text-sm font-semibold text-slate-600">
+                        Your progress
+                    </span>
+
+                    <span id="progressText"
+                        class="text-sm font-bold text-indigo-600">
+                    </span>
+
+                </div>
+
+                <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+
+                    <div
+                        id="progressBar"
+                        class="h-full bg-indigo-600 rounded-full transition-all duration-300"
+                        style="width: 0%;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Tasks -->
+            <div class="p-5 sm:p-6">
+
+                <div id="taskContainer" class="space-y-3"></div>
+
+                <div id="noTasks"
+                    class="text-center py-10 text-slate-400">
+
+                    <div class="text-4xl mb-2">
+                        📋
+                    </div>
+
+                    <p class="font-medium text-slate-500">
+                        Nothing planned yet
+                    </p>
+
+                    <p class="text-sm mt-1">
+                        Add a task to get started.
+                    </p>
+
+                </div>
+
+                <button
+                    id="removeCompleted"
+                    class="hidden mt-5 mx-auto block text-sm font-semibold
+                    text-red-500 hover:text-red-700 transition">
+
+                    Remove completed tasks
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <p class="text-center text-xs text-slate-400 mt-5">
+            Simple planner • Stay organized
+        </p>
+
+    </section>
+
+
+    <script>
+
+        const taskBox = document.getElementById("taskBox");
+        const typeBox = document.getElementById("typeBox");
+        const addTaskButton = document.getElementById("addTaskButton");
+
+        const taskContainer = document.getElementById("taskContainer");
+        const noTasks = document.getElementById("noTasks");
+
+        const progressText = document.getElementById("progressText");
+        const progressBar = document.getElementById("progressBar");
+
+        const removeCompleted = document.getElementById("removeCompleted");
+        const warning = document.getElementById("warning");
+
+
+        let taskData = JSON.parse(localStorage.getItem("myTaskData")) || [];
+
+
+        // Save tasks in browser
+        function storeTasks() {
+            localStorage.setItem("myTaskData", JSON.stringify(taskData));
+        }
+
+
+        // Add new task
+        function createTask() {
+
+            const taskName = taskBox.value.trim();
+
+            if (!taskName) {
+
+                warning.textContent = "Please enter a task first.";
+                taskBox.focus();
+
+                return;
+            }
+
+            warning.textContent = "";
+
+
+            const newTask = {
+
+                taskId: Date.now(),
+
+                title: taskName,
+
+                type: typeBox.value,
+
+                completed: false
+
+            };
+
+
+            taskData.push(newTask);
+
+            taskBox.value = "";
+
+            storeTasks();
+
+            displayTasks();
+        }
+
+
+        // Change task status
+        function changeStatus(taskId) {
+
+            const selectedTask =
+                taskData.find(item => item.taskId === taskId);
+
+            if (!selectedTask) return;
+
+            selectedTask.completed =
+                !selectedTask.completed;
+
+            storeTasks();
+
+            displayTasks();
+        }
+
+
+        // Delete one task
+        function removeTask(taskId) {
+
+            taskData =
+                taskData.filter(item => item.taskId !== taskId);
+
+            storeTasks();
+
+            displayTasks();
+        }
+
+
+        // Display all tasks
+        function displayTasks() {
+
+            taskContainer.innerHTML = "";
+
+
+            taskData.forEach(item => {
+
+                const taskCard = document.createElement("div");
+
+                taskCard.className =
+                    "group flex items-center gap-3 p-4 rounded-2xl " +
+                    "border border-slate-200 bg-slate-50 " +
+                    "hover:bg-white hover:shadow-md transition";
+
+
+                // Checkbox
+                const check = document.createElement("input");
+
+                check.type = "checkbox";
+
+                check.checked = item.completed;
+
+                check.className =
+                    "w-5 h-5 accent-indigo-600 cursor-pointer shrink-0";
+
+                check.addEventListener("change", () => {
+
+                    changeStatus(item.taskId);
+
+                });
+
+
+                // Task text
+                const title = document.createElement("span");
+
+                title.textContent = item.title;
+
+                title.className =
+                    "flex-1 text-sm sm:text-base break-words " +
+                    (item.completed
+                        ? "line-through text-slate-400"
+                        : "text-slate-700 font-medium");
+
+
+                // Category
+                const category = document.createElement("span");
+
+                category.textContent = item.type;
+
+                let categoryStyle =
+                    "text-xs font-semibold px-3 py-1 rounded-full shrink-0 ";
+
+                if (item.type === "Study") {
+
+                    categoryStyle +=
+                        "bg-blue-100 text-blue-700";
+
+                }
+                else if (item.type === "Project") {
+
+                    categoryStyle +=
+                        "bg-purple-100 text-purple-700";
+
+                }
+                else {
+
+                    categoryStyle +=
+                        "bg-green-100 text-green-700";
+
+                }
+
+                category.className = categoryStyle;
+
+
+                // Delete button
+                const deleteButton =
+                    document.createElement("button");
+
+                deleteButton.innerHTML = "×";
+
+                deleteButton.title = "Delete task";
+
+                deleteButton.className =
+                    "w-8 h-8 rounded-lg bg-red-50 text-red-500 " +
+                    "font-bold text-lg hover:bg-red-500 hover:text-white " +
+                    "transition";
+
+
+                deleteButton.addEventListener("click", () => {
+
+                    removeTask(item.taskId);
+
+                });
+
+
+                taskCard.append(
+                    check,
+                    title,
+                    category,
+                    deleteButton
+                );
+
+                taskContainer.appendChild(taskCard);
+
+            });
+
+
+            updateInterface();
+
+        }
+
+
+        // Update progress and empty state
+        function updateInterface() {
+
+            const total = taskData.length;
+
+            const completed =
+                taskData.filter(item => item.completed).length;
+
+
+            if (total === 0) {
+
+                noTasks.classList.remove("hidden");
+
+            }
+            else {
+
+                noTasks.classList.add("hidden");
+
+            }
+
+
+            progressText.textContent =
+                `${completed} / ${total} completed`;
+
+
+            let percentage = 0;
+
+            if (total > 0) {
+
+                percentage =
+                    Math.round((completed / total) * 100);
+
+            }
+
+
+            progressBar.style.width =
+                percentage + "%";
+
+
+            removeCompleted.classList.toggle(
+                "hidden",
+                completed === 0
+            );
+
+        }
+
+
+        // Add button
+        addTaskButton.addEventListener(
+            "click",
+            createTask
+        );
+
+
+        // Enter key
+        taskBox.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Enter") {
+
+                    createTask();
+
+                }
+
+            }
+        );
+
+
+        // Remove completed tasks
+        removeCompleted.addEventListener(
+            "click",
+            function () {
+
+                taskData =
+                    taskData.filter(
+                        item => !item.completed
+                    );
+
+                storeTasks();
+
+                displayTasks();
+
+            }
+        );
+
+
+        // Initial display
+        displayTasks();
+
+    </script>
+
+</body>
+
+</html>
+```
