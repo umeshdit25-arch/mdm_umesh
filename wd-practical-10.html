@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umesh Deshmukh - IT25115</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Outfit', system-ui, sans-serif; }
+  .bar { transition: width .4s ease; }
+  :focus-visible { outline: 2px solid #4338ca; outline-offset: 2px; }
+</style>
+</head>
+<body class="bg-indigo-50 text-slate-800 min-h-screen">
+
+<header class="bg-indigo-700 text-white">
+  <div class="max-w-4xl mx-auto px-4 py-5 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
+    <div>
+      <h1 class="text-2xl font-bold">StudyPlanner</h1>
+      <p class="text-indigo-200 text-sm">Plan your assignments, exams and revision in one place.</p>
+    </div>
+    <p id="today" class="text-sm text-indigo-100"></p>
+  </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-4 py-6 space-y-6">
+
+  <!-- Progress -->
+  <section class="bg-white rounded-xl p-5 shadow-sm" aria-label="Progress">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="font-semibold">Your progress</h2>
+      <span id="progressText" class="text-sm text-slate-500">0 of 0 done</span>
+    </div>
+    <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
+      <div id="progressBar" class="bar h-3 bg-indigo-600 rounded-full" style="width:0%"></div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 mt-4 text-center">
+      <div class="bg-indigo-50 rounded-lg py-2"><p id="cTotal" class="text-xl font-bold">0</p><p class="text-xs text-slate-500">Total</p></div>
+      <div class="bg-amber-50 rounded-lg py-2"><p id="cPending" class="text-xl font-bold">0</p><p class="text-xs text-slate-500">Pending</p></div>
+      <div class="bg-rose-50 rounded-lg py-2"><p id="cOverdue" class="text-xl font-bold">0</p><p class="text-xs text-slate-500">Overdue</p></div>
+    </div>
+  </section>
+
+  <!-- Add task -->
+  <section class="bg-white rounded-xl p-5 shadow-sm">
+    <h2 class="font-semibold mb-3">Add a task</h2>
+    <form id="form" class="grid grid-cols-1 sm:grid-cols-2 gap-3" novalidate>
+      <div class="sm:col-span-2">
+        <label for="title" class="block text-sm font-medium mb-1">Task</label>
+        <input id="title" type="text" maxlength="60" placeholder="e.g. Finish DBMS assignment" class="w-full border border-slate-300 rounded-md px-3 py-2">
+      </div>
+      <div>
+        <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
+        <select id="subject" class="w-full border border-slate-300 rounded-md px-3 py-2 bg-white">
+          <option>Maths</option><option>Programming</option><option>Web Dev</option>
+          <option>DBMS</option><option>English</option><option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="priority" class="block text-sm font-medium mb-1">Priority</label>
+        <select id="priority" class="w-full border border-slate-300 rounded-md px-3 py-2 bg-white">
+          <option>High</option><option selected>Medium</option><option>Low</option>
+        </select>
+      </div>
+      <div>
+        <label for="due" class="block text-sm font-medium mb-1">Due date</label>
+        <input id="due" type="date" class="w-full border border-slate-300 rounded-md px-3 py-2">
+      </div>
+      <div class="flex items-end">
+        <button type="submit" class="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-semibold rounded-md py-2">Add task</button>
+      </div>
+      <p id="error" class="hidden sm:col-span-2 text-sm text-rose-600"></p>
+    </form>
+  </section>
+
+  <!-- Task list -->
+  <section class="bg-white rounded-xl p-5 shadow-sm">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+      <h2 class="font-semibold">Your tasks</h2>
+      <div class="flex gap-2 text-sm" id="tabs" role="tablist">
+        <button data-f="All" class="tab px-3 py-1 rounded-full">All</button>
+        <button data-f="Pending" class="tab px-3 py-1 rounded-full">Pending</button>
+        <button data-f="Done" class="tab px-3 py-1 rounded-full">Done</button>
+      </div>
+    </div>
+    <ul id="list" class="divide-y divide-slate-200"></ul>
+    <p id="empty" class="hidden text-center text-slate-500 py-6">No tasks here. Add one above!</p>
+    <button id="clearDone" class="mt-3 text-sm text-rose-600 hover:underline">Clear completed tasks</button>
+  </section>
+</main>
+
+<footer class="text-center text-xs text-slate-500 py-6">Your tasks are saved in this browser (localStorage).</footer>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const prioColor = { High: 'bg-rose-100 text-rose-700', Medium: 'bg-amber-100 text-amber-700', Low: 'bg-emerald-100 text-emerald-700' };
+  const todayStr = () => new Date().toISOString().slice(0, 10);
+
+  let tasks = JSON.parse(localStorage.getItem('sp_tasks') || '[]');
+  let filter = 'All';
+  const save = () => localStorage.setItem('sp_tasks', JSON.stringify(tasks));
+
+  function render() {
+    const total = tasks.length;
+    const done = tasks.filter(t => t.done).length;
+    const overdue = tasks.filter(t => !t.done && t.due < todayStr()).length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+
+    $('progressText').textContent = done + ' of ' + total + ' done (' + pct + '%)';
+    $('progressBar').style.width = pct + '%';
+    $('cTotal').textContent = total;
+    $('cPending').textContent = total - done;
+    $('cOverdue').textContent = overdue;
+
+    // highlight active tab
+    document.querySelectorAll('.tab').forEach(b => {
+      b.className = 'tab px-3 py-1 rounded-full ' +
+        (b.dataset.f === filter ? 'bg-indigo-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200');
+    });
+
+    // filter + sort by due date
+    const shown = tasks
+      .filter(t => filter === 'All' || (filter === 'Done' ? t.done : !t.done))
+      .sort((a, b) => a.done - b.done || a.due.localeCompare(b.due));
+
+    const list = $('list');
+    list.innerHTML = '';
+    $('empty').classList.toggle('hidden', shown.length > 0);
+
+    shown.forEach(t => {
+      const isOverdue = !t.done && t.due < todayStr();
+      const li = document.createElement('li');
+      li.className = 'py-3 flex items-start gap-3';
+      li.innerHTML = `
+        <input type="checkbox" class="mt-1 h-5 w-5 accent-indigo-600" ${t.done ? 'checked' : ''} aria-label="Mark done">
+        <div class="flex-1 min-w-0">
+          <p class="font-medium break-words ${t.done ? 'line-through text-slate-400' : ''}"></p>
+          <div class="flex flex-wrap items-center gap-2 mt-1 text-xs">
+            <span class="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">${t.subject}</span>
+            <span class="px-2 py-0.5 rounded-full ${prioColor[t.priority]}">${t.priority}</span>
+            <span class="${isOverdue ? 'text-rose-600 font-semibold' : 'text-slate-500'}">Due ${t.due}${isOverdue ? ' (overdue)' : ''}</span>
+          </div>
+        </div>
+        <button class="text-sm text-rose-600 hover:underline" aria-label="Delete task">Delete</button>`;
+      li.querySelector('p').textContent = t.title;    // textContent prevents HTML injection
+      li.querySelector('input').onchange = () => { t.done = !t.done; save(); render(); };
+      li.querySelector('button').onclick = () => { tasks = tasks.filter(x => x.id !== t.id); save(); render(); };
+      list.appendChild(li);
+    });
+  }
+
+  $('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const title = $('title').value.trim(), due = $('due').value, err = $('error');
+    if (!title) { err.textContent = 'Please enter a task name.'; err.classList.remove('hidden'); return; }
+    if (!due)   { err.textContent = 'Please choose a due date.'; err.classList.remove('hidden'); return; }
+    err.classList.add('hidden');
+    tasks.push({ id: Date.now(), title, subject: $('subject').value, priority: $('priority').value, due, done: false });
+    save();
+    $('title').value = '';
+    render();
+  });
+
+  $('tabs').addEventListener('click', e => {
+    if (e.target.dataset.f) { filter = e.target.dataset.f; render(); }
+  });
+  $('clearDone').onclick = () => { tasks = tasks.filter(t => !t.done); save(); render(); };
+
+  $('due').value = todayStr();
+  $('today').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  render();
+</script>
+</body>
+</html>
